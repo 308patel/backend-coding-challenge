@@ -2,7 +2,7 @@
 
 
 import { Role } from 'src/common/enums';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity({ name:'users' })
 export class User {

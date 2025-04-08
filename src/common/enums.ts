@@ -4,4 +4,11 @@ export enum Role {
     ADMIN = 'ADMIN',
   }
 
+  export enum Categories{
+    MOBILE= 'MOBILE',
+    SG = "SMART GADGETS",
+    SPORT = "SPORT",
+    ELECTRONICS = "ELECTRONICS"
+  }
+
    
