@@ -1,4 +1,3 @@
-
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -12,21 +11,21 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    @InjectRepository(User) private users: Repository<User>
+    @InjectRepository(User) private users: Repository<User>,
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findOne(username);
 
-    if(!user){
+    if (!user) {
       return {
-        status:401,
-        message:"invalid creds"
-      }
+        status: 401,
+        message: 'invalid creds',
+      };
     }
-    const dcryptPass = await bcrypt.compare(password, user.password)
+    const dcryptPass = await bcrypt.compare(password, user.password);
 
-    if (user &&  dcryptPass) {
+    if (user && dcryptPass) {
       const { password, ...result } = user;
 
       return result;
@@ -35,14 +34,11 @@ export class AuthService {
   }
 
   async login(user: any) {
-
-     const payload = { username: user.username, sub: user.id, role:user.role };
-      return {
-        status:201,
-        access_token: this.jwtService.sign(payload),
-        message:"login success"
-      };
-
-    
+    const payload = { username: user.username, sub: user.id, role: user.role };
+    return {
+      status: 201,
+      access_token: this.jwtService.sign(payload),
+      message: 'login success',
+    };
   }
 }

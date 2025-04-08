@@ -59,5 +59,4 @@ export class ItemsController {
   delete(@Param() item_id: ItemIdDto) {
     return this.itemsService.delete(item_id);
   }
-
 }

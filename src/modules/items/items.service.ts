@@ -19,7 +19,7 @@ export class ItemsService {
     private users: Repository<User>,
   ) {}
 
-  async create(itemData: ItemDto, req:Request) {
+  async create(itemData: ItemDto, req: Request) {
     try {
       if (!itemData.category || !itemData.price || !itemData.item_name) {
         return {
@@ -27,13 +27,15 @@ export class ItemsService {
           message: 'Please Enter All Details',
         };
       }
-      const user = await this.users.findOne({where:{id:req.user["userId"]}})
+      const user = await this.users.findOne({
+        where: { id: req.user['userId'] },
+      });
 
       const createItem = this.items.create({
         item_name: itemData.item_name,
         category: itemData.category,
         price: itemData.price,
-        user: user
+        user: user,
       });
       const item = await this.items.save(createItem);
       if (!createItem) {
@@ -49,7 +51,6 @@ export class ItemsService {
         message: 'Item Created Successfully',
       };
     } catch (error) {
-        
       return {
         status: 500,
         error: 'Internal Server Error',
@@ -61,7 +62,7 @@ export class ItemsService {
   async getOne(id: ItemIdDto) {
     try {
       const item = await this.items.findOne({
-        where: { id: Number(id.item_id), is_deleted:false },
+        where: { id: Number(id.item_id), is_deleted: false },
       });
 
       if (!item) {
@@ -123,7 +124,7 @@ export class ItemsService {
   async update(updateItem: UpdateItemDto, itemId: ItemIdDto) {
     try {
       const existingItem = await this.items.findOne({
-        where: { id: Number(itemId.item_id), is_deleted:false },
+        where: { id: Number(itemId.item_id), is_deleted: false },
       });
       if (!existingItem) {
         return {
@@ -157,7 +158,7 @@ export class ItemsService {
   async delete(itemId: ItemIdDto) {
     try {
       const existingItem = await this.items.findOne({
-        where: { id: Number(itemId.item_id), is_deleted:false },
+        where: { id: Number(itemId.item_id), is_deleted: false },
       });
       if (!existingItem) {
         return {
@@ -165,12 +166,15 @@ export class ItemsService {
           message: 'Item Not Found',
         };
       }
-      const deletedItem = await this.items.update({id:Number(itemId.item_id)},{is_deleted:true})
+      const deletedItem = await this.items.update(
+        { id: Number(itemId.item_id) },
+        { is_deleted: true },
+      );
       return {
-        status:200,
-        data:{},
-        message:"Item Deleted successfully"
-      }
+        status: 200,
+        data: {},
+        message: 'Item Deleted successfully',
+      };
     } catch (error) {
       return {
         status: 500,

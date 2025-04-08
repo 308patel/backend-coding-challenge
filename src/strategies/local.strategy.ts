@@ -1,4 +1,3 @@
-
 import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -14,9 +13,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const user = await this.authService.validateUser(username, password);
     if (!user) {
       return {
-        status:401,
-        message:"invalid username or password"
-      }
+        status: 401,
+        message: 'invalid username or password',
+      };
     }
     return user;
   }
