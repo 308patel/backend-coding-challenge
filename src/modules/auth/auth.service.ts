@@ -30,7 +30,7 @@ export class AuthService {
 
       return result;
     }
-    return user;
+    return null;
   }
 
   async login(user: any) {

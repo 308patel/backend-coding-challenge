@@ -102,10 +102,14 @@ export class ItemsService {
           name: `%${list.item_name}%`,
         });
       }
-      const listItems = await itemListQuery
+
+      if(list?.page && list?.per_page){
+        itemListQuery
         .skip((page - 1) * per_page)
         .take(per_page)
-        .getManyAndCount();
+      }
+        
+      const listItems = await itemListQuery.getManyAndCount();
 
       return {
         status: 200,
